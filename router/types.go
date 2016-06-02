@@ -27,6 +27,11 @@ type LogAdapter interface {
 	Stream(logstream chan *Message)
 }
 
+type LogHandler interface {
+	// HandleLine return false to stop the rest of the handlers from executing
+	HandleLine(*Message) bool
+}
+
 type Job interface {
 	Run() error
 	Setup() error
@@ -65,6 +70,7 @@ type Route struct {
 	Address       string            `json:"address"`
 	Options       map[string]string `json:"options,omitempty"`
 	adapter       LogAdapter
+	Handler       LogHandler // either LogAdapter or LogHandler allowed, not both
 	closer        chan bool
 	closerRcv     <-chan bool // used instead of closer when set
 }

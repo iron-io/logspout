@@ -24,3 +24,14 @@ curl http://localhost:8000/routes -d '{
 ```
 
 Now any log messages that come out of any container on your machine will go through your adapter. 
+
+## For testing LogHandler style
+
+See custom-handler folder for example. 
+
+Then run:
+
+```sh
+./run-custom.sh
+```
+

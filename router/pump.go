@@ -322,6 +322,14 @@ func newContainerPump(container *docker.Container, stdout, stderr io.Reader) *co
 func (cp *containerPump) send(msg *Message) {
 	cp.Lock()
 	defer cp.Unlock()
+	for _, handler := range Handlers.Handlers {
+		// todo: could do some matching here like routes
+		if ok := handler.HandleLine(msg); !ok {
+			// Abort processing the rest of them
+			break
+		}
+		continue
+	}
 	for logstream, route := range cp.logstreams {
 		if !route.MatchMessage(msg) {
 			continue
