@@ -1,0 +1,1 @@
+FROM iron/logspout
