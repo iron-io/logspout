@@ -6,7 +6,7 @@ build context that will override the standard one.
 
 This uses the LogHandler interface to show chaining concept and the ability to abort processing chain. 
 
-Add your handlers to modules go file. 
+Add your handlers to `modules.go` file.
 
 Then build it by building an image in this directory:
 

@@ -12,11 +12,7 @@ import (
 	"github.com/gliderlabs/logspout/router"
 )
 
-func init() {
-	router.AdapterFactories.Register(NewRawAdapter, "raw")
-}
-
-func NewRawAdapter(route *router.Route) (router.LogAdapter, error) {
+func New(route *router.Route) (router.LogAdapter, error) {
 	transport, found := router.AdapterTransports.Lookup(route.AdapterTransport("udp"))
 	if !found {
 		return nil, errors.New("bad transport: " + route.Adapter)

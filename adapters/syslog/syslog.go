@@ -18,7 +18,8 @@ var hostname string
 
 func init() {
 	hostname, _ = os.Hostname()
-	router.AdapterFactories.Register(NewSyslogAdapter, "syslog")
+	// More like the stdlib sql lib
+	// router.Register("syslog", &SyslogAdapter{})
 }
 
 func getopt(name, dfault string) string {
@@ -29,7 +30,7 @@ func getopt(name, dfault string) string {
 	return value
 }
 
-func NewSyslogAdapter(route *router.Route) (router.LogAdapter, error) {
+func New(route *router.Route) (router.LogHandler, error) {
 	transport, found := router.AdapterTransports.Lookup(route.AdapterTransport("udp"))
 	if !found {
 		return nil, errors.New("bad transport: " + route.Adapter)
