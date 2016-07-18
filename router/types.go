@@ -27,6 +27,7 @@ type LogAdapter interface {
 	Stream(logstream chan *Message)
 }
 
+// LogHandler is another way of handling log messages, rather than using stream/channel, LogHandler's will receive each line.
 type LogHandler interface {
 	// HandleLine return false to stop the rest of the handlers from executing
 	HandleLine(*Message) bool
@@ -80,7 +81,12 @@ func (r *Route) AdapterType() string {
 }
 
 func (r *Route) AdapterTransport(dfault string) string {
-	parts := strings.Split(r.Adapter, "+")
+	return TransportProtocol(r.Adapter, dfault)
+}
+
+// So it can be used outside of a Route
+func TransportProtocol(scheme, dfault string) string {
+	parts := strings.Split(scheme, "+")
 	if len(parts) > 1 {
 		return parts[1]
 	}

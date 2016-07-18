@@ -2,8 +2,10 @@ package main
 
 import (
 	// These are all the regular ones included in logspout
+	"os"
+
 	_ "github.com/gliderlabs/logspout/adapters/raw"
-	_ "github.com/gliderlabs/logspout/adapters/syslog"
+	"github.com/gliderlabs/logspout/adapters/syslog"
 	_ "github.com/gliderlabs/logspout/httpstream"
 	"github.com/gliderlabs/logspout/router"
 	_ "github.com/gliderlabs/logspout/routesapi"
@@ -18,5 +20,5 @@ import (
 func init() {
 	router.Handlers.Add(hello.New("foo"))
 	router.Handlers.Add(hello.New("bar"))
-	// router.Routes.AddFromUri("syslog://logs4.papertrailapp.com:25630")
+	router.Handlers.Add(syslog.NewSyslogHandler(os.Getenv("SYSLOG_URL")))
 }

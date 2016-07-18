@@ -20,5 +20,6 @@ And start it up with:
 docker run --rm --name=logspout \
      -v=/var/run/docker.sock:/var/run/docker.sock \
      -p 8000:80 \
+     -e SYSLOG_URL=syslog://logs.papertrailapp.com:55555
      mylogspouter
 ```
